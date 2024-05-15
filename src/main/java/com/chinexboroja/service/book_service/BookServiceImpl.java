@@ -3,6 +3,9 @@ package com.chinexboroja.service.book_service;
 import com.chinexboroja.dto.BookData;
 import com.chinexboroja.dto.BookRequest;
 import com.chinexboroja.dto.BookResponse;
+import com.chinexboroja.exceptions.BadRequestException;
+import com.chinexboroja.exceptions.NoContentException;
+import com.chinexboroja.exceptions.NotFoundException;
 import com.chinexboroja.models.Book;
 import com.chinexboroja.repositories.BookRepository;
 import java.util.List;
@@ -22,6 +25,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookResponse> getAllBooks() {
         List<Book> books = bookRepository.findAll();
+        if (books.isEmpty()) {
+            throw new NoContentException("Books not found");
+        }
         List<BookData> bookDataList = books.stream()
             .map(this::mapToBookData)
             .collect(Collectors.toList());
@@ -32,6 +38,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<BookResponse> getBookById(Long bookId) {
         Book book = getBookEntityById(bookId);
+        if (book == null) {
+            throw new NotFoundException("Book not found with id " + bookId);
+        }
         BookData bookData = mapToBookData(book);
 
         return Optional.of(createBookResponse(true, "Book retrieved successfully", bookData));
@@ -39,6 +48,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookResponse addNewBook(BookRequest bookRequest) {
+
+        if (isBookAlreadyExists(bookRequest)) {
+            throw new BadRequestException("Book with ISBN " + bookRequest.getIsbn() + " already exists");
+        }
         Book book = mapToEntity(bookRequest);
         Book savedBook = bookRepository.save(book);
         BookData bookData = mapToBookData(savedBook);
@@ -49,6 +62,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookResponse updateBook(Long bookId, BookRequest bookRequest) {
         Book book = getBookEntityById(bookId);
+
+        if (book == null) {
+            throw new NotFoundException("Book not found with id " + bookId);
+        }
 
         book.setTitle(bookRequest.getTitle());
         book.setAuthor(bookRequest.getAuthor());
@@ -69,7 +86,7 @@ public class BookServiceImpl implements BookService {
 
     private Book getBookEntityById(Long id) {
         return bookRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Book with the id " + id + " not found"));
+            .orElseThrow(() -> new NotFoundException("Book with the id " + id + " not found"));
     }
 
     private BookData mapToBookData(Book book) {
@@ -106,4 +123,11 @@ public class BookServiceImpl implements BookService {
             bookRequest.getIsbn()
         );
     }
+
+    private boolean isBookAlreadyExists(BookRequest bookRequest) {
+
+        Optional<Book> existingBook = bookRepository.findByIsBn(bookRequest.getIsbn());
+        return existingBook.isPresent();
+    }
+
 }
