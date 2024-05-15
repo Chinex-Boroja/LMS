@@ -26,8 +26,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long id, String title, String author, LocalDateTime publicationYear, String isbn) {
-        this.id = id;
+    public Book(String title, String author, LocalDateTime publicationYear, String isbn) {
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
