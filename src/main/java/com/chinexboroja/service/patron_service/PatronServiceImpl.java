@@ -8,11 +8,15 @@ import com.chinexboroja.models.Patron;
 import com.chinexboroja.repositories.PatronRepository;
 import java.util.List;
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PatronServiceImpl implements PatronService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PatronServiceImpl.class);
     private final PatronRepository patronRepository;
 
     public PatronServiceImpl(PatronRepository patronRepository) {
@@ -75,7 +79,7 @@ public class PatronServiceImpl implements PatronService {
     public void deletePatron(Long patronId) {
 
         if (getPatronById(patronId).isEmpty()) {
-            throw new NotFoundException("Delete not successful, Patron not found with id " + patronId);
+            LOGGER.info("Delete not successful, Patron not found with id {}", patronId);
         }
         patronRepository.deleteById(patronId);
 
