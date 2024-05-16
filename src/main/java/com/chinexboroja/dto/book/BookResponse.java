@@ -1,4 +1,4 @@
-package com.chinexboroja.dto;
+package com.chinexboroja.dto.book;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
 package com.chinexboroja.controller;
 
-import com.chinexboroja.dto.BookRequest;
-import com.chinexboroja.dto.BookResponse;
+import com.chinexboroja.dto.book.BookRequest;
+import com.chinexboroja.dto.book.BookResponse;
 import com.chinexboroja.service.book_service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -39,13 +40,13 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookResponse> addNewBook(@RequestBody BookRequest bookRequest) {
+    public ResponseEntity<BookResponse> addNewBook(@Valid @RequestBody BookRequest bookRequest) {
         final var response = bookService.addNewBook(bookRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookResponse> updateBook(@PathVariable Long id, @RequestBody BookRequest bookRequest) {
+    public ResponseEntity<BookResponse> updateBook(@PathVariable Long id, @Valid @RequestBody BookRequest bookRequest) {
         final var response = bookService.updateBook(id, bookRequest);
         return ResponseEntity.ok(response);
     }

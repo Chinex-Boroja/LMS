@@ -1,8 +1,8 @@
 package com.chinexboroja.service.book_service;
 
-import com.chinexboroja.dto.BookData;
-import com.chinexboroja.dto.BookRequest;
-import com.chinexboroja.dto.BookResponse;
+import com.chinexboroja.dto.book.BookData;
+import com.chinexboroja.dto.book.BookRequest;
+import com.chinexboroja.dto.book.BookResponse;
 import com.chinexboroja.exceptions.BadRequestException;
 import com.chinexboroja.exceptions.NoContentException;
 import com.chinexboroja.exceptions.NotFoundException;

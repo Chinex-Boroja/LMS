@@ -1,7 +1,7 @@
 package com.chinexboroja.service.book_service;
 
-import com.chinexboroja.dto.BookRequest;
-import com.chinexboroja.dto.BookResponse;
+import com.chinexboroja.dto.book.BookRequest;
+import com.chinexboroja.dto.book.BookResponse;
 import java.util.List;
 import java.util.Optional;
 

@@ -12,15 +12,23 @@ import java.util.Objects;
  * Created on 22/04/2024 at 23:13pm
  */
 @Entity
-@Table(name = "book_table")
+@Table(name = "books")
 public class Book {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "publication_year")
     private LocalDateTime publicationYear;
+
+    @Column(name = "isbn")
     private String isbn;
 
     public Book() {
