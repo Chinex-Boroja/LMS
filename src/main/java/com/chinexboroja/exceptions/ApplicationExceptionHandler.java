@@ -22,7 +22,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<ApiError> handleBadRequestException(NoContentException e) {
+    public ResponseEntity<ApiError> handleNoContentException(NoContentException e) {
         final var error = new ApiError(HttpStatus.NO_CONTENT, e.getLocalizedMessage());
         return new ResponseEntity<>(error, error.getHttpStatus());
     }

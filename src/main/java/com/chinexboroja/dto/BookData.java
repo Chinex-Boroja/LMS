@@ -21,8 +21,6 @@ public class BookData {
         this.isbn = isbn;
     }
 
-    // Getters and setters
-
     public Long getId() {
         return id;
     }

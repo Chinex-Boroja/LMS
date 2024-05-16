@@ -8,6 +8,8 @@ import com.chinexboroja.exceptions.NoContentException;
 import com.chinexboroja.exceptions.NotFoundException;
 import com.chinexboroja.models.Book;
 import com.chinexboroja.repositories.BookRepository;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,7 +34,7 @@ public class BookServiceImpl implements BookService {
             .map(this::mapToBookData)
             .collect(Collectors.toList());
 
-        return (List<BookResponse>) createBookResponseList(true, "Books retrieved successfully", bookDataList);
+        return createBookResponseList(true, "Books retrieved successfully", bookDataList);
     }
 
     @Override
@@ -107,12 +109,13 @@ public class BookServiceImpl implements BookService {
         return response;
     }
 
-    private BookResponse createBookResponseList(boolean status, String message, List<BookData> dataList) {
-        BookResponse response = new BookResponse();
-        response.setStatus(status);
-        response.setMessage(message);
-        response.setData((BookData) dataList);
-        return response;
+    private List<BookResponse> createBookResponseList(boolean status, String message, List<BookData> dataList) {
+        List<BookResponse> responses = new ArrayList<>();
+        for (BookData data : dataList) {
+            BookResponse response = createBookResponse(status, message, data);
+            responses.add(response);
+        }
+        return responses;
     }
 
     private Book mapToEntity(BookRequest bookRequest) {
@@ -126,7 +129,7 @@ public class BookServiceImpl implements BookService {
 
     private boolean isBookAlreadyExists(BookRequest bookRequest) {
 
-        Optional<Book> existingBook = bookRepository.findByIsBn(bookRequest.getIsbn());
+        Optional<Book> existingBook = bookRepository.findByIsbn(bookRequest.getIsbn());
         return existingBook.isPresent();
     }
 

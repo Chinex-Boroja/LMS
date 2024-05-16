@@ -1,10 +1,15 @@
 package com.chinexboroja.dto;
 
+import java.util.List;
+
 public class BookResponse {
 
     private boolean status;
     private String message;
     private BookData data;
+    private List<BookData> dataList;
+
+
 
     public boolean isStatus() {
         return status;
@@ -28,5 +33,13 @@ public class BookResponse {
 
     public void setData(BookData data) {
         this.data = data;
+    }
+
+    public List<BookData> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<BookData> dataList) {
+        this.dataList = dataList;
     }
 }
