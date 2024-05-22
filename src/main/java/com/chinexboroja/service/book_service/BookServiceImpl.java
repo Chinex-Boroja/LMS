@@ -1,18 +1,14 @@
 package com.chinexboroja.service.book_service;
 
-import com.chinexboroja.dto.book.BookData;
-import com.chinexboroja.dto.book.BookRequest;
-import com.chinexboroja.dto.book.BookResponse;
+import com.chinexboroja.dto.BookRequest;
 import com.chinexboroja.exceptions.BadRequestException;
 import com.chinexboroja.exceptions.NoContentException;
 import com.chinexboroja.exceptions.NotFoundException;
 import com.chinexboroja.models.Book;
 import com.chinexboroja.repositories.BookRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,44 +21,42 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponse> getAllBooks() {
+    public List<Book> getAllBooks() {
         List<Book> books = bookRepository.findAll();
         if (books.isEmpty()) {
             throw new NoContentException("Books not found");
         }
-        List<BookData> bookDataList = books.stream()
-            .map(this::mapToBookData)
-            .collect(Collectors.toList());
 
-        return createBookResponseList(true, "Books retrieved successfully", bookDataList);
+        return bookRepository.findAll();
     }
 
     @Override
-    public Optional<BookResponse> getBookById(Long bookId) {
+    public Optional<Book> getBookById(Long bookId) {
         Book book = getBookEntityById(bookId);
         if (book == null) {
             throw new NotFoundException("Book not found with id " + bookId);
         }
-        BookData bookData = mapToBookData(book);
 
-        return Optional.of(createBookResponse(true, "Book retrieved successfully", bookData));
+        return bookRepository.findById(bookId);
     }
 
     @Override
-    public BookResponse addNewBook(BookRequest bookRequest) {
+    public Book addNewBook(BookRequest bookRequest) {
 
         if (isBookAlreadyExists(bookRequest)) {
             throw new BadRequestException("Book with ISBN " + bookRequest.getIsbn() + " already exists");
         }
-        Book book = mapToEntity(bookRequest);
-        Book savedBook = bookRepository.save(book);
-        BookData bookData = mapToBookData(savedBook);
+        final Book book = new Book();
+        book.setTitle(bookRequest.getTitle());
+        book.setAuthor(bookRequest.getAuthor());
+        book.setPublicationYear(bookRequest.getPublicationYear());
+        book.setIsbn(bookRequest.getIsbn());
 
-        return createBookResponse(true, "Book added successfully", bookData);
+        return bookRepository.save(book);
     }
 
     @Override
-    public BookResponse updateBook(Long bookId, BookRequest bookRequest) {
+    public Book updateBook(Long bookId, BookRequest bookRequest) {
         Book book = getBookEntityById(bookId);
 
         if (book == null) {
@@ -74,57 +68,18 @@ public class BookServiceImpl implements BookService {
         book.setPublicationYear(bookRequest.getPublicationYear());
         book.setIsbn(bookRequest.getIsbn());
 
-        Book updatedBook = bookRepository.save(book);
-        BookData bookData = mapToBookData(updatedBook);
-        return createBookResponse(true, "Book updated successfully", bookData);
+        return bookRepository.save(book);
     }
 
     @Override
-    public BookResponse deleteBook(Long bookId) {
+    public void deleteBook(Long bookId) {
         Book book = getBookEntityById(bookId);
         bookRepository.delete(book);
-        return createBookResponse(true, "Book deleted successfully", null);
     }
 
     private Book getBookEntityById(Long id) {
         return bookRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Book with the id " + id + " not found"));
-    }
-
-    private BookData mapToBookData(Book book) {
-        return new BookData(
-            book.getId(),
-            book.getTitle(),
-            book.getAuthor(),
-            book.getPublicationYear(),
-            book.getIsbn()
-        );
-    }
-
-    private BookResponse createBookResponse(boolean status, String message, BookData data) {
-        BookResponse response = new BookResponse();
-        response.setStatus(status);
-        response.setMessage(message);
-        response.setData(data);
-        return response;
-    }
-
-    private List<BookResponse> createBookResponseList(boolean status, String message, List<BookData> dataList) {
-        List<BookResponse> responses = new ArrayList<>();
-        for (BookData data : dataList) {
-            BookResponse response = createBookResponse(status, message, data);
-            responses.add(response);
-        }
-        return responses;
-    }
-
-    private Book mapToEntity(BookRequest bookRequest) {
-        return new Book(
-            bookRequest.getTitle(),
-            bookRequest.getAuthor(),
-            bookRequest.getPublicationYear(),
-            bookRequest.getIsbn()
-        );
     }
 
     private boolean isBookAlreadyExists(BookRequest bookRequest) {

@@ -33,10 +33,9 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> handleValidationExceptions(MethodArgumentNotValidException e) {
         StringBuilder errors = new StringBuilder();
-        e.getBindingResult().getFieldErrors().forEach(error -> {
+        e.getBindingResult().getFieldErrors().forEach(error ->
             errors.append(error.getField()).append(": ").append(error.getDefaultMessage())
-                    .append("; ");
-        });
+                .append("; "));
 
         final var error = new ApiError(HttpStatus.BAD_REQUEST, "Validation errors: " + errors);
         return new ResponseEntity<>(error, error.getHttpStatus());

@@ -1,7 +1,7 @@
 package com.chinexboroja.controller;
 
-import com.chinexboroja.dto.patron.PatronRequest;
-import com.chinexboroja.dto.patron.Response;
+import com.chinexboroja.dto.PatronRequest;
+import com.chinexboroja.dto.Response;
 import com.chinexboroja.models.Patron;
 import com.chinexboroja.service.patron_service.PatronService;
 import jakarta.validation.Valid;

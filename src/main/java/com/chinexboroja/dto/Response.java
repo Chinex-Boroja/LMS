@@ -1,4 +1,4 @@
-package com.chinexboroja.dto.patron;
+package com.chinexboroja.dto;
 
 public class Response<E> {
     private boolean status;

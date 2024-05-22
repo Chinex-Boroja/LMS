@@ -1,7 +1,7 @@
 package com.chinexboroja.controller;
 
 import com.chinexboroja.dto.BorrowingRecordDto;
-import com.chinexboroja.dto.patron.Response;
+import com.chinexboroja.dto.Response;
 import com.chinexboroja.service.borrowing_record.BorrowingRecordService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

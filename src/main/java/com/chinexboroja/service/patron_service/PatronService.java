@@ -1,7 +1,7 @@
 package com.chinexboroja.service.patron_service;
 
 
-import com.chinexboroja.dto.patron.PatronRequest;
+import com.chinexboroja.dto.PatronRequest;
 import com.chinexboroja.models.Patron;
 import java.util.List;
 import java.util.Optional;

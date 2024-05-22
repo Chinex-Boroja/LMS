@@ -1,4 +1,4 @@
-package com.chinexboroja.dto.book;
+package com.chinexboroja.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;

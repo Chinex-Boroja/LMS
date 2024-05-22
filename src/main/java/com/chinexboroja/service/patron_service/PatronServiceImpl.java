@@ -1,6 +1,6 @@
 package com.chinexboroja.service.patron_service;
 
-import com.chinexboroja.dto.patron.PatronRequest;
+import com.chinexboroja.dto.PatronRequest;
 import com.chinexboroja.exceptions.BadRequestException;
 import com.chinexboroja.exceptions.NoContentException;
 import com.chinexboroja.exceptions.NotFoundException;

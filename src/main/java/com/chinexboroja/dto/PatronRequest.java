@@ -1,4 +1,4 @@
-package com.chinexboroja.dto.patron;
+package com.chinexboroja.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

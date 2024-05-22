@@ -1,19 +1,19 @@
 package com.chinexboroja.service.book_service;
 
-import com.chinexboroja.dto.book.BookRequest;
-import com.chinexboroja.dto.book.BookResponse;
+import com.chinexboroja.dto.BookRequest;
+import com.chinexboroja.models.Book;
 import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
 
-    List<BookResponse> getAllBooks();
+    List<Book> getAllBooks();
 
-    Optional<BookResponse> getBookById(Long bookId);
+    Optional<Book> getBookById(Long bookId);
 
-    BookResponse addNewBook(BookRequest bookRequest);
+    Book addNewBook(BookRequest bookRequest);
 
-    BookResponse updateBook(Long bookId, BookRequest bookRequest);
+    Book updateBook(Long bookId, BookRequest bookRequest);
 
-    BookResponse deleteBook(Long bookId);
+    void deleteBook(Long bookId);
 }
