@@ -1,9 +1,10 @@
 package com.chinexboroja.service.borrowing_record;
 
+import com.chinexboroja.dto.BorrowingRecordDto;
 import com.chinexboroja.models.BorrowingRecord;
 
 public interface BorrowingRecordService {
 
-    BorrowingRecord borrowBook(Long bookId, Long patronId);
-    BorrowingRecord returnBook(Long bookId, Long patronId);
+    BorrowingRecordDto borrowBook(Long bookId, Long patronId);
+    BorrowingRecordDto returnBook(Long bookId, Long patronId);
 }
