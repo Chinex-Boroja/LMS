@@ -13,11 +13,11 @@ public class BorrowingRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patron_id")
     private Patron patron;
 
@@ -27,8 +27,7 @@ public class BorrowingRecord {
     public BorrowingRecord() {
     }
 
-    public BorrowingRecord(Long id, Book book, Patron patron, LocalDateTime borrowDate, LocalDateTime returnDate) {
-        this.id = id;
+    public BorrowingRecord(Book book, Patron patron, LocalDateTime borrowDate, LocalDateTime returnDate) {
         this.book = book;
         this.patron = patron;
         this.borrowDate = borrowDate;
@@ -37,10 +36,6 @@ public class BorrowingRecord {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Book getBook() {
