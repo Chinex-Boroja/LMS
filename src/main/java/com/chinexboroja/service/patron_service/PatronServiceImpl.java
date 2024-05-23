@@ -6,12 +6,14 @@ import com.chinexboroja.exceptions.NoContentException;
 import com.chinexboroja.exceptions.NotFoundException;
 import com.chinexboroja.models.Patron;
 import com.chinexboroja.repositories.PatronRepository;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatronServiceImpl implements PatronService {
@@ -40,6 +42,7 @@ public class PatronServiceImpl implements PatronService {
             .orElseThrow(() -> new NotFoundException("Patron not found with id " + patronId)));
     }
 
+   @Transactional
     @Override
     public Patron addNewPatron(PatronRequest patronRequest) {
         if (isPatronAlreadyExists(patronRequest)) {
@@ -56,6 +59,7 @@ public class PatronServiceImpl implements PatronService {
         return patronRepository.save(patron);
     }
 
+    @Transactional
     @Override
     public Patron updatePatron(Long patronId, PatronRequest patronRequest) {
 
@@ -75,6 +79,7 @@ public class PatronServiceImpl implements PatronService {
         return patronRepository.save(patron);
     }
 
+    @Transactional
     @Override
     public void deletePatron(Long patronId) {
 

@@ -9,7 +9,7 @@ import com.chinexboroja.models.Patron;
 import com.chinexboroja.repositories.BookRepository;
 import com.chinexboroja.repositories.BorrowingRecordRepository;
 import com.chinexboroja.repositories.PatronRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 

@@ -7,6 +7,7 @@ import com.chinexboroja.exceptions.NotFoundException;
 import com.chinexboroja.models.Book;
 import com.chinexboroja.repositories.BookRepository;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(bookId);
     }
 
+    @Transactional
     @Override
     public Book addNewBook(BookRequest bookRequest) {
 
@@ -55,6 +57,7 @@ public class BookServiceImpl implements BookService {
         return bookRepository.save(book);
     }
 
+    @Transactional
     @Override
     public Book updateBook(Long bookId, BookRequest bookRequest) {
         Book book = getBookEntityById(bookId);
@@ -71,6 +74,7 @@ public class BookServiceImpl implements BookService {
         return bookRepository.save(book);
     }
 
+    @Transactional
     @Override
     public void deleteBook(Long bookId) {
         Book book = getBookEntityById(bookId);
