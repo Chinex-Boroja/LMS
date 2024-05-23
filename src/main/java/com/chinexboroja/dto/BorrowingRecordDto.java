@@ -1,12 +1,15 @@
 package com.chinexboroja.dto;
 
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class BorrowingRecordDto {
 
     private Long id;
+    @NotNull(message = "Book ID is required")
     private Long bookId;
     private String bookTitle;
+    @NotNull(message = "Patron ID is required")
     private Long patronId;
     private String patronName;
     private LocalDateTime borrowDate;
